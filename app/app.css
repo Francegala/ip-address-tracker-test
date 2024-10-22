@@ -4,6 +4,7 @@
     grid-gap: 10px;
     font-weight: 400;
     font-size: 18px;
+    font-family: 'Rubik';
 }
 
 h1 {
@@ -24,6 +25,7 @@ h2 {
 
 .bgImage {
     background: url(../images/pattern-bg-desktop.png);
+    padding-bottom: 50px;
 }
 
 @media screen and (min-width: 375px) {
@@ -61,8 +63,18 @@ h2 {
 }
 
 table {
+    margin-left: auto;
+    margin-right: auto;
+    align-items: center;
     border-collapse: collapse;
-    width: 50px;
+    width: 70%;
+    background-color: white;
+    border-radius: 15px 15px 15px 15px;
+    padding-bottom: 150px;
+    z-index: 7;
+        margin-top: -25px;
+    position: relative;
+
 }
 
 th, td {
@@ -78,3 +90,8 @@ th {
     text-transform: uppercase;
 }
 
+.map {
+    margin-top: -50px;
+    z-index: 2;
+    position: relative;
+}

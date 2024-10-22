@@ -77,22 +77,24 @@ export default function Index() {
     const data = dataPosted || dataFetched;
 
     return (<>
-    <main className={"content"}>
-            <div className={"bgImage"}>
-                <h1>IP Address Tracker</h1>
+        {data?.message ? <p>{data.message}</p> : <>
+            <main className={"content"}>
+                <div className={"bgImage"}>
+                    <h1>IP Address Tracker</h1>
 
-                {data?.message ? <p>{data.message}</p> : <>
-<Form method="post" id="ip-form">
-    <div className="input-container">
-        <input type="text" id="address" name="address" className={"round"}
-               placeholder={"Search for any IP address or domain"}
-               required/>
-        <button>
-            <img src={imageArrow} alt={"arrow submit"}/>
-        </button>
-    </div>
-</Form>
-                    <table style={{borderCollapse: "collapse", width: "100%"}}>
+                    <Form method="post" id="ip-form">
+                        <div className="input-container">
+                            <input type="text" id="address" name="address" className={"round"}
+                                   placeholder={"Search for any IP address or domain"}
+                                   required/>
+                            <button>
+                                <img src={imageArrow} alt={"arrow submit"}/>
+                            </button>
+                        </div>
+                    </Form>
+                </div>
+
+                <table>
                     <thead>
                     <tr>
                         <th>
@@ -128,18 +130,17 @@ export default function Index() {
                     </tr>
                     </tbody>
                 </table>
-                 </>}
-                </div>
 
-                    <div className="div">
+                <div className="div map">
                     <ClientOnly>
-                    <Suspense fallback="">
-                    <LazyImported lat={data?.lat || "Loading..."} lon={data?.lon || "Loading..."}/>
+                        <Suspense fallback="">
+                            <LazyImported lat={data?.lat || "Loading..."} lon={data?.lon || "Loading..."}/>
                         </Suspense>
                     </ClientOnly>
-        </div>
+                </div>
 
-        </main>
-    </>
-);
+            </main>
+        </>}
+    </>);
+
 }

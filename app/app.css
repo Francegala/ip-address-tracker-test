@@ -1,3 +1,39 @@
-h1{
+.content {
+
+    display: grid;
+    grid-template-columns: auto;
+    grid-gap: 10px;
+    font-weight: 400;
+    font-size: 18px;
+}
+
+h1 {
+    font-size: 25px;
+    font-weight: 700;
     color: red;
+}
+
+h2 {
+    font-weight: 500;
+}
+
+.content > div {
+    text-align: center;
+    padding: 20px 0;
+    font-size: 30px;
+}
+.bgImage {
+   background: url(../images/pattern-bg-desktop.png);
+}
+
+@media screen and (min-width: 375px) {
+  .bgImage {
+   background: url(../images/pattern-bg-mobile.png);
+  }
+}
+
+@media screen and (min-width: 1440px) {
+  .bgImage {
+   background: url(../images/pattern-bg-desktop.png);
+  }
 }

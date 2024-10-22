@@ -76,10 +76,11 @@ export default function Index() {
     const data = dataPosted || dataFetched;
 
     return (<>
-        <main id="content">
-            <h1>IP Address Tracker</h1>
+    <main className={"content"}>
+            <div className={"bgImage"}>
+                <h1>IP Address Tracker</h1>
 
-            {data?.message ? <p>{data.message}</p> : <>
+                {data?.message ? <p>{data.message}</p> : <>
                 <Form method="post" id="ip-form">
                     <p>
                         <input type="text" id="address" name="address"
@@ -136,7 +137,7 @@ export default function Index() {
                     <tbody>
                     <tr>
                         <td style={{border: "1px solid #ddd", padding: "8px", fontSize: "16px", color: "black"}}>
-                            {data?.ip || "Loading..."}
+                            {data?.ip || "L eoading..."}
                         </td>
                         <td style={{border: "1px solid #ddd", padding: "8px", fontSize: "16px", color: "black"}}>
                             {data?.location || "Loading..."}
@@ -150,12 +151,18 @@ export default function Index() {
                     </tr>
                     </tbody>
                 </table>
-                <ClientOnly>
+                 </>}
+                </div>
+
+                    <div className="div">
+                    <ClientOnly>
                     <Suspense fallback="">
-                        <LazyImported lat={data?.lat || "Loading..."} lon={data?.lon || "Loading..."}/>
-                    </Suspense>
-                </ClientOnly>
-            </>}
+                    <LazyImported lat={data?.lat || "Loading..."} lon={data?.lon || "Loading..."}/>
+                        </Suspense>
+                    </ClientOnly>
+        </div>
+
         </main>
-    </>);
+    </>
+);
 }

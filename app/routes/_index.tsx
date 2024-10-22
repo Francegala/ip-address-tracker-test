@@ -32,7 +32,6 @@ export async function loader({request}: LoaderFunctionArgs) {
     const geoLoc = await response.json();
     const nominatimURL = await fetch('https://nominatim.openstreetmap.org/search?addressDetails=1&q=' + geoLoc.location.region + ", " + geoLoc.location.country + '&format=json&limit=1');
     const coordinates = await nominatimURL.json();
-    console.log("coordinates: ",coordinates[0].lat,coordinates[0].lon)
 
     return json({
         ip: geoLoc.ip,
@@ -40,7 +39,7 @@ export async function loader({request}: LoaderFunctionArgs) {
         timezone: geoLoc.location.timezone,
         isp: geoLoc.isp,
         lat: coordinates[0].lat,
-            lon: coordinates[0].lon
+        lon: coordinates[0].lon
     });
 }
 
@@ -62,7 +61,7 @@ export async function action({request}: ActionFunctionArgs) {
             location: geoLoc.location.region + ", " + geoLoc.location.country,
             timezone: geoLoc.location.timezone,
             isp: geoLoc.isp,
-        lat: coordinates[0].lat,
+            lat: coordinates[0].lat,
             lon: coordinates[0].lon
 
         };
@@ -77,101 +76,86 @@ export default function Index() {
     const data = dataPosted || dataFetched;
 
     return (<>
-            <main id="content">
-                <h1>IP Address Tracker</h1>
+        <main id="content">
+            <h1>IP Address Tracker</h1>
 
-                {data?.message ? <p>{data.message}</p> : <>
-                    <Form method="post" id="ip-form">
-                        <p>
-                            <input type="text" id="address" name="address"
-                                   placeholder={"Search for any IP address or domain"}
-                                   required/>
-                        </p>
-                        <div className="form-actions">
-                            <button>
-                                {">"}
-                            </button>
-                        </div>
-                    </Form>
-                    <table style={{borderCollapse: "collapse", width: "100%"}}>
-                        <thead>
-                        <tr>
-                            <th style={{
-                                border: "1px solid #ddd",
-                                padding: "8px",
-                                fontSize: "12px",
-                                color: "gray",
-                                textTransform: "uppercase"
-                            }}>
-                                IP ADDRESS
-                            </th>
-                            <th style={{
-                                border: "1px solid #ddd",
-                                padding: "8px",
-                                fontSize: "12px",
-                                color: "gray",
-                                textTransform: "uppercase"
-                            }}>
-                                LOCATION
-                            </th>
-                            <th style={{
-                                border: "1px solid #ddd",
-                                padding: "8px",
-                                fontSize: "12px",
-                                color: "gray",
-                                textTransform: "uppercase"
-                            }}>
-                                TIMEZONE
-                            </th>
-                            <th style={{
-                                border: "1px solid #ddd",
-                                padding: "8px",
-                                fontSize: "12px",
-                                color: "gray",
-                                textTransform: "uppercase"
-                            }}>
-                                ISP
-                            </th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr>
-                            <td style={{border: "1px solid #ddd", padding: "8px", fontSize: "16px", color: "black"}}>
-                                {data?.ip || "Loading..."}
-                            </td>
-                            <td style={{border: "1px solid #ddd", padding: "8px", fontSize: "16px", color: "black"}}>
-                                {data?.location || "Loading..."}
-                            </td>
-                            <td style={{border: "1px solid #ddd", padding: "8px", fontSize: "16px", color: "black"}}>
-                                {data?.timezone || "Loading..."}
-                            </td>
-                            <td style={{border: "1px solid #ddd", padding: "8px", fontSize: "16px", color: "black"}}>
-                                {data?.isp || "Loading..."}
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
-
-                    <br/>
-                    <br/>
-                    <br/>
-                    <br/>
-                    <br/>
-                    <br/>
-                    <br/>
-                    <br/>
-                    <br/>
-                    <br/>
-                    <br/>
-                    <br/>
-                    <br/>
-                    <br/>
-                    <ClientOnly>
-                        <Suspense fallback="">
-                            <LazyImported  lat={data?.lat || "Loading..."} lon={data?.lon || "Loading..."}/>
-                        </Suspense>
-                    </ClientOnly>
-                </>}
-            </main>
-        </>);
+            {data?.message ? <p>{data.message}</p> : <>
+                <Form method="post" id="ip-form">
+                    <p>
+                        <input type="text" id="address" name="address"
+                               placeholder={"Search for any IP address or domain"}
+                               required/>
+                    </p>
+                    <div className="form-actions">
+                        <button>
+                            {">"}
+                        </button>
+                    </div>
+                </Form>
+                <table style={{borderCollapse: "collapse", width: "100%"}}>
+                    <thead>
+                    <tr>
+                        <th style={{
+                            border: "1px solid #ddd",
+                            padding: "8px",
+                            fontSize: "12px",
+                            color: "gray",
+                            textTransform: "uppercase"
+                        }}>
+                            IP ADDRESS
+                        </th>
+                        <th style={{
+                            border: "1px solid #ddd",
+                            padding: "8px",
+                            fontSize: "12px",
+                            color: "gray",
+                            textTransform: "uppercase"
+                        }}>
+                            LOCATION
+                        </th>
+                        <th style={{
+                            border: "1px solid #ddd",
+                            padding: "8px",
+                            fontSize: "12px",
+                            color: "gray",
+                            textTransform: "uppercase"
+                        }}>
+                            TIMEZONE
+                        </th>
+                        <th style={{
+                            border: "1px solid #ddd",
+                            padding: "8px",
+                            fontSize: "12px",
+                            color: "gray",
+                            textTransform: "uppercase"
+                        }}>
+                            ISP
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td style={{border: "1px solid #ddd", padding: "8px", fontSize: "16px", color: "black"}}>
+                            {data?.ip || "Loading..."}
+                        </td>
+                        <td style={{border: "1px solid #ddd", padding: "8px", fontSize: "16px", color: "black"}}>
+                            {data?.location || "Loading..."}
+                        </td>
+                        <td style={{border: "1px solid #ddd", padding: "8px", fontSize: "16px", color: "black"}}>
+                            {data?.timezone || "Loading..."}
+                        </td>
+                        <td style={{border: "1px solid #ddd", padding: "8px", fontSize: "16px", color: "black"}}>
+                            {data?.isp || "Loading..."}
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+                <ClientOnly>
+                    <Suspense fallback="">
+                        <LazyImported lat={data?.lat || "Loading..."} lon={data?.lon || "Loading..."}/>
+                    </Suspense>
+                </ClientOnly>
+            </>}
+        </main>
+    </>);
 }

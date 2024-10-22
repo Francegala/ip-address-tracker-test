@@ -1,11 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import {
-    Form,
-    Links,
-    LiveReload,
-    Meta,
-    Outlet,
-    Scripts,
+    Form, Links, LiveReload, Meta, Outlet, Scripts,
 } from "@remix-run/react";
 
 // import homeStyles from '~/styles/home.css';
@@ -15,12 +10,10 @@ import {ActionFunctionArgs, json, LinksFunction, LoaderFunctionArgs, redirect} f
 import appStylesHref from "./app.css?url";
 
 
-
 export default function App() {
 
 
-    return (
-        <html lang="en">
+    return (<html lang="en">
         <head>
             <meta charSet="utf-8"/>
             <meta name="viewport" content="width=device-width, initial-scale=1"/>
@@ -34,10 +27,10 @@ export default function App() {
         {/* 🤦🏻 This component renders the client runtime of your app 🤦🏻‍♂️*/}
         <Scripts/>
         </body>
-        </html>
-    );
+        </html>);
 }
-export const links: LinksFunction = () => [
-    {rel: "stylesheet", href: appStylesHref},
-    // {rel: "stylesheet", href: homeStyles},
+export const links: LinksFunction = () => [{
+    rel: "stylesheet",
+    href: appStylesHref
+}, // {rel: "stylesheet", href: homeStyles},
 ];

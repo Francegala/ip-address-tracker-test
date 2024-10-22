@@ -1,27 +1,38 @@
-// react
-// https://github.com/ms-aija/LeafletReact5minDemo
-// to use name of city
-// https://stackoverflow.com/questions/64953981/react-leaflet-the-name-of-the-place-not-the-coordinates
-// code at
-// https://codesandbox.io/p/sandbox/geocoding-in-react-leaflet-v3x-v6pm4
-
-// import {ClientOnly} from "remix-utils/client-only"
-import {MapContainer, TileLayer} from 'react-leaflet'
-
-function MainNavigation(location:any) {
-  // Berlino
-  const position = [location.lat, location.lon]
+import {MapContainer, Marker, Popup, TileLayer} from 'react-leaflet'
+import {LinksFunction} from "@remix-run/node";
+import L from 'leaflet';
 
 
-    return (<div className="map">
-                    <MapContainer center={position} zoom={10} >
-                        <TileLayer
-                            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                        />
-                    </MapContainer>
-                </div>
+function MainNavigation(location: any) {
 
-            );
+    const position = [location.lat, location.lon]
+
+    const myIcon = new L.Icon({
+        iconUrl: ('../../images/icon-location.svg'), iconSize: new L.Point(60, 75), className: 'leaflet-div-icon'
+    });
+
+
+    return (
+
+        <MapContainer center={position} zoom={13} scrollWheelZoom={false}>
+            <TileLayer
+                attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+            />
+            <Marker position={position} icon={myIcon}>
+                <Popup>
+                    A pretty CSS3 popup. <br/> Easily customizable.
+                </Popup>
+            </Marker>
+        </MapContainer>
+
+
+    );
 }
 
 export default MainNavigation;
+
+export const links: LinksFunction = () => [{rel: "stylesheet", href: appStylesHref}, {
+    rel: "stylesheet",
+    href: 'https://unpkg.com/leaflet@1.0.1/dist/leaflet.css'
+},];

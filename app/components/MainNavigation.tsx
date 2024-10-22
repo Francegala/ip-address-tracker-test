@@ -1,5 +1,4 @@
 import {MapContainer, Marker, Popup, TileLayer} from 'react-leaflet'
-import {LinksFunction} from "@remix-run/node";
 import L from 'leaflet';
 
 
@@ -32,7 +31,3 @@ function MainNavigation(location: any) {
 
 export default MainNavigation;
 
-export const links: LinksFunction = () => [{rel: "stylesheet", href: appStylesHref}, {
-    rel: "stylesheet",
-    href: 'https://unpkg.com/leaflet@1.0.1/dist/leaflet.css'
-},];

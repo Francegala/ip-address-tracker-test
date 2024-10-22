@@ -1,9 +1,7 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import {
-    Form, Links, LiveReload, Meta, Outlet, Scripts,
+    Links, Meta, Outlet, Scripts,
 } from "@remix-run/react";
 
-// import homeStyles from '~/styles/home.css';
 
 import {ActionFunctionArgs, json, LinksFunction, LoaderFunctionArgs, redirect} from "@remix-run/node";
 
@@ -32,5 +30,5 @@ export default function App() {
 export const links: LinksFunction = () => [{
     rel: "stylesheet",
     href: appStylesHref
-}, // {rel: "stylesheet", href: homeStyles},
+},  {rel: "stylesheet", href: 'https://fonts.googleapis.com/css?family=Rubik'},
 ];

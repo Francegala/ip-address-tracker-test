@@ -1,12 +1,13 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import {
-    Form, useActionData, useLoaderData,
+    Form, useActionData, useLoaderData
 } from "@remix-run/react";
 
 
 import {ActionFunctionArgs, json, LinksFunction, LoaderFunctionArgs, redirect} from "@remix-run/node";
 import {ReactNode, useEffect, useState, lazy, Suspense} from "react";
 
+import imageArrow from '../../images/icon-arrow.svg'
 
 // https://remix.run/resources/remix-utils
 import {getClientIPAddress} from "remix-utils/get-client-ip-address";
@@ -81,71 +82,47 @@ export default function Index() {
                 <h1>IP Address Tracker</h1>
 
                 {data?.message ? <p>{data.message}</p> : <>
-                <Form method="post" id="ip-form">
-                    <p>
-                        <input type="text" id="address" name="address"
-                               placeholder={"Search for any IP address or domain"}
-                               required/>
-                    </p>
-                    <div className="form-actions">
-                        <button>
-                            {">"}
-                        </button>
-                    </div>
-                </Form>
-                <table style={{borderCollapse: "collapse", width: "100%"}}>
+<Form method="post" id="ip-form">
+    <div className="input-container">
+        <input type="text" id="address" name="address" className={"round"}
+               placeholder={"Search for any IP address or domain"}
+               required/>
+        <button>
+            <img src={imageArrow} alt={"arrow submit"}/>
+        </button>
+    </div>
+</Form>
+                    <table style={{borderCollapse: "collapse", width: "100%"}}>
                     <thead>
                     <tr>
-                        <th style={{
-                            border: "1px solid #ddd",
-                            padding: "8px",
-                            fontSize: "12px",
-                            color: "gray",
-                            textTransform: "uppercase"
-                        }}>
+                        <th>
                             IP ADDRESS
                         </th>
-                        <th style={{
-                            border: "1px solid #ddd",
-                            padding: "8px",
-                            fontSize: "12px",
-                            color: "gray",
-                            textTransform: "uppercase"
-                        }}>
+                        <th>
+
                             LOCATION
                         </th>
-                        <th style={{
-                            border: "1px solid #ddd",
-                            padding: "8px",
-                            fontSize: "12px",
-                            color: "gray",
-                            textTransform: "uppercase"
-                        }}>
+                        <th>
+
                             TIMEZONE
                         </th>
-                        <th style={{
-                            border: "1px solid #ddd",
-                            padding: "8px",
-                            fontSize: "12px",
-                            color: "gray",
-                            textTransform: "uppercase"
-                        }}>
+                        <th>
                             ISP
                         </th>
                     </tr>
                     </thead>
                     <tbody>
                     <tr>
-                        <td style={{border: "1px solid #ddd", padding: "8px", fontSize: "16px", color: "black"}}>
-                            {data?.ip || "L eoading..."}
+                        <td>
+                            {data?.ip || "Loading..."}
                         </td>
-                        <td style={{border: "1px solid #ddd", padding: "8px", fontSize: "16px", color: "black"}}>
+                        <td>
                             {data?.location || "Loading..."}
                         </td>
-                        <td style={{border: "1px solid #ddd", padding: "8px", fontSize: "16px", color: "black"}}>
+                        <td>
                             {data?.timezone || "Loading..."}
                         </td>
-                        <td style={{border: "1px solid #ddd", padding: "8px", fontSize: "16px", color: "black"}}>
+                        <td>
                             {data?.isp || "Loading..."}
                         </td>
                     </tr>

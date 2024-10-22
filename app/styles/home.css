@@ -19,3 +19,8 @@
 #cta a:hover {
   background-color: var(--color-secondary-200);
 }
+
+.leaflet-container {
+  width: 350px;
+  height: 350px;
+}

@@ -8,6 +8,7 @@
     "**/.client/**/*.tsx"
   ],
   "compilerOptions": {
+    "module": "esnext", // add this line
     "lib": ["DOM", "DOM.Iterable", "ES2022"],
     "types": ["@remix-run/node", "vite/client"],
     "isolatedModules": true,

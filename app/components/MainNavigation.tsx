@@ -5,29 +5,23 @@
 // code at
 // https://codesandbox.io/p/sandbox/geocoding-in-react-leaflet-v3x-v6pm4
 
-import { ClientOnly } from "remix-utils/client-only"
-import {Icon} from 'leaflet'
-import {MapContainer, TileLayer, Marker, Popup} from 'react-leaflet'
+// import {ClientOnly} from "remix-utils/client-only"
+import {MapContainer, TileLayer} from 'react-leaflet'
 
-function MainNavigation() {
-const position = [52.51, 13.38]
+function MainNavigation(location:any) {
+  // Berlino
+  const position = [location.lat, location.lon]
 
-  return (
-  <ClientOnly fallback={null}>
-   {() => (
- <MapContainer center={position} zoom={6} scrollWheelZoom={true}>
-                <TileLayer
-                    attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-                    url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                />
-                <Marker position={position}>
-                    <Popup>
-                        🐻🍻🎉
-                    </Popup>
-                </Marker>
-            </MapContainer>   )}
- </ClientOnly>
-  );
+
+    return (<div className="map">
+                    <MapContainer center={position} zoom={10} >
+                        <TileLayer
+                            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                        />
+                    </MapContainer>
+                </div>
+
+            );
 }
 
 export default MainNavigation;

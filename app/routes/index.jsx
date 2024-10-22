@@ -1,39 +1,48 @@
 import {
     Form,
-    useActionData,
+    useActionData, useLoaderData,
     useTransition as useNavigation,
 } from '@remix-run/react';
-import { getClientIPAddress } from "remix-utils/get-client-ip-address";
+// https://remix.run/resources/remix-utils
+import {getClientIPAddress} from "remix-utils";
 
 import homeStyles from '~/styles/home.css';
 import {getStoredNotes, storeNotes} from "~/data/notes";
 import {json, redirect} from "@remix-run/node";
 
-export async function loader({ request }) {
+export async function loader({request}) {
 
     // using the request
-	let ipAddress = getClientIPAddress(request);
-	// or using the headers
-	// let ipAddress = getClientIPAddress(request.headers);
-    console.log("FRA",ipAddress)
+    let ipAddress = getClientIPAddress(request) ?? getClientIPAddress(request.headers) ?? '81.98.36.111'
+
+    const response = await
+        fetch(
+            `https://geo.ipify.org/api/v2/country?apiKey=at_N8owOeBcMSoi95ZyenAIerCNzi36E&ipAddress=${ipAddress}`
+        );
+    const geoLoc = await response.json();
+
+    return {
+        ip: geoLoc.ip,
+        location: geoLoc.location.region + ", " + geoLoc.location.country,
+        timezone: geoLoc.location.timezone,
+        isp: geoLoc.isp
+    }
 }
 
-
 export async function action({request}) {
-    console.log("FRA",request.connection)
+
     const formData = await request.formData();
     const IPData = Object.fromEntries(formData);
 
-    if (IPData.address.trim().length < 12) {
-        return {message: 'Invalid IP ADDRESS - must be at least 5 characters long.'};
+    if (IPData.address.trim().length < 5 && /^\d+(\.\d+)+$/.test(IPData.address.trim())) {
+        return {message: 'Invalid IP v4 ADDRESS - must be at least 5 characters long.'};
     } else {
         const response = await
             fetch(
                 `https://geo.ipify.org/api/v2/country?apiKey=at_N8owOeBcMSoi95ZyenAIerCNzi36E&ipAddress=${IPData.address}`
             );
         const geoLoc = await response.json();
-        console.log(geoLoc)
-        // await new Promise((resolve, reject) => setTimeout(() => resolve(), 2000));
+
         return {
             ip: geoLoc.ip,
             location: geoLoc.location.region + ", " + geoLoc.location.country,
@@ -45,7 +54,8 @@ export async function action({request}) {
 }
 
 export default function Index() {
-    const data = useActionData();
+    const data = useActionData() || useLoaderData();
+
     const navigation = useNavigation();
 
     const isSubmitting = navigation.state === 'submitting';
@@ -55,7 +65,8 @@ export default function Index() {
             <h1>IP Address Tracker</h1>
             <Form method="post" id="ip-form">
                 <p>
-                    <input type="text" id="address" name="address" placeholder={"Search for any IP address or domain"}
+                    <input type="text" id="address" name="address"
+                           placeholder={"Search for any IP address or domain"}
                            required/>
                 </p>
                 <div className="form-actions">
@@ -110,16 +121,16 @@ export default function Index() {
                     <tbody>
                     <tr>
                         <td style={{border: "1px solid #ddd", padding: "8px", fontSize: "16px", color: "black"}}>
-                            {data?.ip||"Loading..."}
+                            {data?.ip || "Loading..."}
                         </td>
                         <td style={{border: "1px solid #ddd", padding: "8px", fontSize: "16px", color: "black"}}>
-                            {data?.location||"Loading..."}
+                            {data?.location || "Loading..."}
                         </td>
                         <td style={{border: "1px solid #ddd", padding: "8px", fontSize: "16px", color: "black"}}>
-                            {data?.timezone||"Loading..."}
+                            {data?.timezone || "Loading..."}
                         </td>
                         <td style={{border: "1px solid #ddd", padding: "8px", fontSize: "16px", color: "black"}}>
-                            {data?.isp||"Loading..."}
+                            {data?.isp || "Loading..."}
                         </td>
                     </tr>
                     </tbody>

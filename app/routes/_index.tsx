@@ -26,7 +26,15 @@ export function ClientOnly({children}: { children: ReactNode }) {
 
 // 93.47.231.225
 export async function loader({request}: LoaderFunctionArgs) {
-    // using the request
+return json({
+        ip: "93.47.231.225",
+        location: "Test Data not to use API",
+        timezone: "+00",
+        isp: "Three",
+        lat: "33.4857022",
+        lon: "33.4857022",
+    });
+// using the request
     const ipAddress = getClientIPAddress(request) ?? getClientIPAddress(request.headers) ?? '3.11.106.35'
 
     // const response = await fetch(`https://geo.ipify.org/api/v2/country,city?apiKey=at_N8owOeBcMSoi95ZyenAIerCNzi36E&ipAddress=${ipAddress}`);
@@ -34,7 +42,6 @@ export async function loader({request}: LoaderFunctionArgs) {
     const geoLoc = await response.json();
     const nominatimURL = await fetch('https://nominatim.openstreetmap.org/search?addressDetails=1&q=' + geoLoc.location.city + '&format=json&limit=1');
     const coordinates = await nominatimURL.json();
-
     return json({
         ip: geoLoc.ip,
         location: geoLoc.location.city + ", " + geoLoc.location.region+ ", " + geoLoc.location.country,
@@ -99,47 +106,30 @@ export default function Index() {
                 <table>
                     <thead>
                     <tr>
-                        <th>
-                            IP ADDRESS
-                        </th>
-                        <th>
-
-                            LOCATION
-                        </th>
-                        <th>
-
-                            TIMEZONE
-                        </th>
-                        <th>
-                            ISP
-                        </th>
+                        <th>IP ADDRESS</th>
+                        <th>LOCATION</th>
+                        <th>TIMEZONE</th>
+                        <th>ISP</th>
                     </tr>
                     </thead>
                     <tbody>
                     <tr>
-                        <td>
-                            {data?.ip || "Loading..."}
-                        </td>
-                        <td>
-                            {data?.location || "Loading..."}
-                        </td>
-                        <td>
-                            {"UTC "+ data?.timezone || "Loading..."}
-                        </td>
-                        <td>
-                            {data?.isp || "Loading..."}
-                        </td>
+                        <td data-label="IP ADDRESS">{data?.ip || "Loading..."}</td>
+                        <td data-label="LOCATION">{data?.location || "Loading..."}</td>
+                        <td data-label="TIMEZONE">{"UTC " + (data?.timezone || "Loading...")}</td>
+                        <td data-label="ISP">{data?.isp || "Loading..."}</td>
                     </tr>
                     </tbody>
                 </table>
 
-                <div className="div map">
-                    <ClientOnly>
-                        <Suspense fallback="">
-                            <LazyImported lat={data?.lat || "Loading..."} lon={data?.lon || "Loading..."}/>
-                        </Suspense>
-                    </ClientOnly>
-                </div>
+
+                {/*<div className="div map">*/}
+                {/*    <ClientOnly>*/}
+                {/*        <Suspense fallback="">*/}
+                {/*            <LazyImported lat={data?.lat || "Loading..."} lon={data?.lon || "Loading..."}/>*/}
+                {/*        </Suspense>*/}
+                {/*    </ClientOnly>*/}
+                {/*</div>*/}
 
             </main>
         </>}

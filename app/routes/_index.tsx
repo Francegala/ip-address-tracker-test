@@ -26,14 +26,6 @@ export function ClientOnly({children}: { children: ReactNode }) {
 
 // 93.47.231.225
 export async function loader({request}: LoaderFunctionArgs) {
-return json({
-        ip: "93.47.231.225",
-        location: "Test Data not to use API",
-        timezone: "+00",
-        isp: "Three",
-        lat: "33.4857022",
-        lon: "33.4857022",
-    });
 // using the request
     const ipAddress = getClientIPAddress(request) ?? getClientIPAddress(request.headers) ?? '3.11.106.35'
 
@@ -123,13 +115,13 @@ export default function Index() {
                 </table>
 
 
-                {/*<div className="div map">*/}
-                {/*    <ClientOnly>*/}
-                {/*        <Suspense fallback="">*/}
-                {/*            <LazyImported lat={data?.lat || "Loading..."} lon={data?.lon || "Loading..."}/>*/}
-                {/*        </Suspense>*/}
-                {/*    </ClientOnly>*/}
-                {/*</div>*/}
+                <div className="div map">
+                    <ClientOnly>
+                        <Suspense fallback="">
+                            <LazyImported lat={data?.lat || "Loading..."} lon={data?.lon || "Loading..."}/>
+                        </Suspense>
+                    </ClientOnly>
+                </div>
 
             </main>
         </>}

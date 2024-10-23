@@ -124,7 +124,7 @@ export default function Index() {
                             {data?.location || "Loading..."}
                         </td>
                         <td>
-                            {data?.timezone || "Loading..."}
+                            {"UTC "+ data?.timezone || "Loading..."}
                         </td>
                         <td>
                             {data?.isp || "Loading..."}

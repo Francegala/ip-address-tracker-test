@@ -79,14 +79,20 @@ table {
 }
 
 th, td {
+    padding-left: 50px;
+    padding-top: 20px;
+    padding-bottom: 20px;
     font-weight: 500;
     margin-left: 5px;
-    padding: 8px;
     border-left: 1px solid #bbb;
     font-size: 16px;
     color: black;
     text-align: left;
     vertical-align: middle;
+}
+
+td {
+    padding-bottom: 40px;
 }
 
 th {
@@ -116,9 +122,8 @@ th {
         border-bottom: 1px solid #bbb;
         font-size: 16px;
         border-bottom: none;
-        padding: 10px 10px;
+        padding: 15px 0 15px 0;
         vertical-align: center;
-
     }
 
     td::before {
@@ -129,7 +134,6 @@ th {
         color: gray;
         padding-bottom: 5px;
     }
-
 }
 
 .map {
@@ -138,5 +142,4 @@ th {
     position: relative;
     max-height: 100vh;
     overflow: hidden;
-
 }
